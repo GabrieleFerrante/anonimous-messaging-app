@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARPANet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .fill {
+            min-height: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body data-bs-theme="light">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-expand text-bg-dark">
+        <div class="container">
+            <h3>ARPANet</h3>
+            <button class="btn btn-outline-light" id="theme-button"><i class="bi bi-moon"></i></button>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <div class="my-2 d-flex justify-content-end"><button class="btn btn-primary" onclick="refreshUsersList()"><i
+                    class="bi bi-arrow-clockwise"></i></button>
+        </div>
+        <div class="container-fluid my-2" id="users-list"></div>
+    </div>
+
+    <div class="modal fade" id="chat" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header text-bg-dark">
+                    <h1 class="modal-title" id="chat-label">Chat title</h1>
+                    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-bs-theme="dark"></button>
+                </div>
+                <div class="modal-body overflow-y-scroll" id="chat-body">
+                    <div class="container fs-5 mb-1"></div>
+                </div>
+                <div class="modal-footer text-bg-dark">
+                    <form id="chat-input-form">
+                        <input type="text" autocomplete="off" id="chat-input" class="form-control mx-auto"
+                            data-bs-theme="light">
+                    </form>
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+    <script>
+        // Dark and Light mode
+        const button = document.getElementById("theme-button")
+        const icon = button.firstChild
+
+        console.log(document.cookie)
+
+        button.onclick = () => {
+            if (document.body.dataset.bsTheme == "light") {
+                button.classList.remove("btn-outline-light")
+                button.classList.add("btn-dark")
+
+                icon.classList.remove("bi-moon")
+                icon.classList.add("bi-moon-fill")
+
+                document.body.dataset.bsTheme = "dark"
+
+                document.cookie = "dark=true"
+            } else {
+                button.classList.remove("btn-dark")
+                button.classList.add("btn-outline-light")
+
+                icon.classList.remove("bi-moon-fill")
+                icon.classList.add("bi-moon")
+
+                document.body.dataset.bsTheme = "light"
+
+                document.cookie = "dark=false"
+            }
+        }
+
+        if (document.cookie == "dark=true") {
+            button.classList.remove("btn-outline-light")
+            button.classList.add("btn-dark")
+
+            icon.classList.remove("bi-moon")
+            icon.classList.add("bi-moon-fill")
+
+            document.body.dataset.bsTheme = "dark"
+        }
+    </script>
+
+
+</body>
+
+</html>
